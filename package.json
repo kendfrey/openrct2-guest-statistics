@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run watch",
     "watch": "nodemon --watch ./src --ext js,ts",
-    "build": "npm run lint && rollup --config rollup.config.prod.js",
+    "build": "rollup --config rollup.config.prod.js",
     "build:dev": "rollup --config rollup.config.dev.js",
     "lint": "eslint ./src --ext .js --ext .ts"
   },

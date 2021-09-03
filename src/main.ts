@@ -40,8 +40,8 @@ function showStats()
 		const windowDesc: WindowDesc =
 		{
 			classification: windowId,
-			width: 262,
-			height: 235,
+			width: 263,
+			height: 236,
 			title: "Guest Statistics",
 			widgets:
 			[
@@ -71,7 +71,7 @@ function showStats()
 					x: 2,
 					y: 31,
 					width: 258,
-					height: 202,
+					height: 203,
 					onDraw: drawStats,
 				}
 			],
@@ -82,6 +82,7 @@ function showStats()
 }
 
 let stats: number[];
+let scaleX: number;
 
 function refresh()
 {
@@ -92,16 +93,23 @@ function refresh()
 	{
 		case 0:
 			statFun = g => g.happiness;
+			scaleX = 1;
 			break;
 		case 1:
-			statFun = g => g.energy;
+			statFun = g => g.energy - 32;
+			scaleX = 3;
 			break;
 		case 2:
 			statFun = g => 255 - g.hunger;
+			scaleX = 1;
 			break;
 	}
-	stats = makeStats(getGuests().map(statFun));
-	window.bringToFront(); // It doesn't redraw properly without this.
+	makeStats(getGuests().map(statFun));
+	
+	const width = stats.length * scaleX;
+	window.maxWidth = width + 7;
+	window.minWidth = width + 7;
+	window.findWidget<CustomWidget>("stat-display").width = width + 2;
 }
 
 function getGuests(): Guest[]
@@ -109,9 +117,9 @@ function getGuests(): Guest[]
 	return map.getAllEntities("peep").filter(p => p.peepType === "guest") as Guest[];
 }
 
-function makeStats(data: number[]): number[]
+function makeStats(data: number[])
 {
-	const stats = [];
+	stats = [];
 	let max = 0;
 
 	// Make a histogram
@@ -126,18 +134,16 @@ function makeStats(data: number[]): number[]
 	{
 		stats[i] = Math.ceil((stats[i] || 0) * 200 / max);
 	}
-
-	return stats;
 }
 
 function drawStats(this: CustomWidget, g: GraphicsContext)
 {
-	g.stroke = 21;
-	g.well(0, 0, 257, 202);
+	g.fill = 21;
+	g.well(0, 0, stats.length * scaleX + 2, 203);
 
 	for (let x = 0; x < stats.length; x++)
 	{
-		g.line(x + 1, 201, x + 1, 201 - stats[x]);
+		g.rect(x * scaleX + 1, 201 - stats[x], scaleX, stats[x]);
 	}
 }
 

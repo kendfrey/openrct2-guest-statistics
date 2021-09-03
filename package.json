@@ -1,5 +1,5 @@
 {
-  "name": "openrct2-typescript-mod-template",
+  "name": "openrct2-guest-statistics",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -8,19 +8,18 @@
     "watch": "nodemon --watch ./src --ext js,ts",
     "build": "npm run lint && rollup --config rollup.config.prod.js",
     "build:dev": "rollup --config rollup.config.dev.js",
-    "lint": "eslint ./src --ext .js --ext .ts",
-    "init": "node ./script/init.js"
+    "lint": "eslint ./src --ext .js --ext .ts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wisnia74/openrct2-typescript-mod-template.git"
+    "url": "git+https://github.com/kendfrey/openrct2-guest-statistics.git"
   },
-  "author": "wisnia74",
+  "author": "kendfrey",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wisnia74/openrct2-typescript-mod-template/issues"
+    "url": "https://github.com/kendfrey/openrct2-guest-statistics/issues"
   },
-  "homepage": "https://github.com/wisnia74/openrct2-typescript-mod-template#readme",
+  "homepage": "https://github.com/kendfrey/openrct2-guest-statistics#readme",
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.2.0",
     "@typescript-eslint/eslint-plugin": "^4.0.0",

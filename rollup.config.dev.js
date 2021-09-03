@@ -4,7 +4,7 @@ import { terser } from 'rollup-plugin-terser';
 export default {
   input: './src/registerPlugin.ts',
   output: {
-    file: 'PATH_TO_OPENRCT2/plugin/MOD_NAME.js',
+    file: 'C:/Users/Kendall/Documents/OpenRCT2/plugin/Guest Statistics.js',
     format: 'iife',
   },
   plugins: [

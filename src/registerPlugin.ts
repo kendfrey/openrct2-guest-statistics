@@ -3,9 +3,9 @@
 import main from './main';
 
 registerPlugin({
-  name: 'MOD_NAME',
+  name: 'Guest Statistics',
   version: '1.0',
-  authors: ['MOD_AUTHOR'],
+  authors: ['kendfrey'],
   type: 'local',
   licence: 'MIT',
   main,

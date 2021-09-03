@@ -3,10 +3,10 @@
 import main from './main';
 
 registerPlugin({
-  name: 'Guest Statistics',
-  version: '1.0',
-  authors: ['kendfrey'],
-  type: 'local',
-  licence: 'MIT',
-  main,
+	name: 'Guest Statistics',
+	version: '1.0',
+	authors: ['kendfrey'],
+	type: 'local',
+	licence: 'MIT',
+	main,
 });

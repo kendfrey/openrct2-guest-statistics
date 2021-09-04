@@ -32,7 +32,7 @@ function showStats()
 					y: 16,
 					width: 100,
 					height: 13,
-					items: ["Happiness", "Energy", "Hunger"],
+					items: ["Happiness", "Energy", "Hunger", "Thirst", "Nausea", "Toilet", "Cash", "Mass"],
 					selectedIndex: 0,
 					onChange: refresh,
 				},
@@ -63,30 +63,53 @@ function showStats()
 
 let stats: number[];
 let scaleX: number;
+let width: number | undefined;
 
 function refresh()
 {
 	const window = ui.getWindow(windowId);
 	const statType = window.findWidget<DropdownWidget>("stat-type");
-	let statFun : (g: Guest) => number;
+	let statFun: (g: Guest) => number;
+	scaleX = 1;
+	width = 256;
 	switch (statType.selectedIndex)
 	{
 		case 0:
 			statFun = g => g.happiness;
-			scaleX = 1;
 			break;
 		case 1:
 			statFun = g => g.energy - 32;
 			scaleX = 3;
+			width = 291;
 			break;
 		case 2:
 			statFun = g => 255 - g.hunger;
-			scaleX = 1;
+			break;
+		case 3:
+			statFun = g => 255 - g.thirst;
+			break;
+		case 4:
+			statFun = g => g.nausea;
+			break;
+		case 5:
+			statFun = g => g.toilet;
+			break;
+		case 6:
+			statFun = g => g.cash;
+			width = undefined;
+			break;
+		case 7:
+			statFun = g => g.mass - 45;
+			scaleX = 8;
+			width = 256;
 			break;
 	}
 	makeStats(getGuests().map(statFun));
 	
-	const width = stats.length * scaleX;
+	if (width === undefined)
+	{
+		width = stats.length * scaleX;
+	}
 	window.maxWidth = width + 7;
 	window.minWidth = width + 7;
 	window.findWidget<CustomWidget>("stat-display").width = width + 2;
@@ -119,7 +142,7 @@ function makeStats(data: number[])
 function drawStats(this: CustomWidget, g: GraphicsContext)
 {
 	g.fill = 21;
-	g.well(0, 0, stats.length * scaleX + 2, 203);
+	g.well(0, 0, width + 2, 203);
 
 	for (let x = 0; x < stats.length; x++)
 	{

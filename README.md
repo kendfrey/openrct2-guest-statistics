@@ -2,7 +2,7 @@
 
 This plugin can show you the distribution of various guest stats as a histogram.
 
-![screenshot](screenshot.png)
+![screenshot](https://raw.githubusercontent.com/kendfrey/openrct2-guest-statistics/master/screenshot.png)
 
 ## Installation
 

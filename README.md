@@ -1,8 +1,8 @@
 # Guest Statistics
 
-[WIP] This plugin can show you the distribution of various guest stats as a histogram.
+This plugin can show you the distribution of various guest stats as a histogram.
 
-TODO: screenshot
+![screenshot](screenshot.png)
 
 ## Installation
 

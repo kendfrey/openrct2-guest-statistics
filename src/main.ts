@@ -68,6 +68,7 @@ function showStats()
 					height: 13,
 					onDecrement: decMin,
 					onIncrement: incMin,
+					onClick: () => { rangeMax = rangeMin; refreshUI(); },
 				},
 				{
 					name: "range-max",
@@ -78,6 +79,7 @@ function showStats()
 					height: 13,
 					onDecrement: decMax,
 					onIncrement: incMax,
+					onClick: () => { rangeMin = rangeMax; refreshUI(); },
 				},
 				{
 					type: "button",

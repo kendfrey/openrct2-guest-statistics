@@ -26,7 +26,7 @@ function showStats()
 		{
 			classification: windowId,
 			width: 264,
-			height: 252,
+			height: 267,
 			title: "Guest Statistics",
 			widgets:
 			[
@@ -78,6 +78,23 @@ function showStats()
 					height: 13,
 					onDecrement: decMax,
 					onIncrement: incMax,
+				},
+				{
+					type: "button",
+					x: 3,
+					y: 251,
+					width: 60,
+					height: 13,
+					text: "Track",
+					onClick: trackSelection,
+				},
+				{
+					name: "selection",
+					type: "label",
+					x: 65,
+					y: 252,
+					width: 100,
+					height: 11,
 				}
 			],
 		};
@@ -173,6 +190,19 @@ function refreshUI()
 	window.findWidget<SpinnerWidget>("range-min").text = show(rangeMin);
 	window.findWidget<SpinnerWidget>("range-max").text = show(rangeMax);
 	window.findWidget<SpinnerWidget>("range-max").x = width - 75;
+
+	let selected = 0;
+	let total = 0;
+	for (let i = 0; i < stats.length; i++)
+	{
+		if (i >= rangeMin && i <= rangeMax)
+		{
+			selected += stats[i] || 0;
+		}
+
+		total += stats[i] || 0;
+	}
+	window.findWidget<LabelWidget>("selection").text = selected + "/" + total;
 }
 
 function decMin()
@@ -234,6 +264,14 @@ function drawStats(this: CustomWidget, g: GraphicsContext)
 		g.fill = x < rangeMin || x > rangeMax ? 19 : 21;
 		const height = Math.ceil(stats[x] * scaleY);
 		g.rect(x * scaleX + 1, 201 - height, scaleX, height);
+	}
+}
+
+function trackSelection()
+{
+	for (const guest of getGuests())
+	{
+		guest.setFlag("tracking", statFun(guest) >= rangeMin && statFun(guest) <= rangeMax);
 	}
 }
 

@@ -25,16 +25,16 @@ function showStats()
 		const windowDesc: WindowDesc =
 		{
 			classification: windowId,
-			width: 263,
-			height: 251,
+			width: 264,
+			height: 252,
 			title: "Guest Statistics",
 			widgets:
 			[
 				{
 					name: "stat-type",
 					type: "dropdown",
-					x: 2,
-					y: 16,
+					x: 3,
+					y: 17,
 					width: 100,
 					height: 13,
 					items: ["Happiness", "Energy", "Hunger", "Thirst", "Nausea", "Toilet", "Cash", "Mass"],
@@ -43,8 +43,8 @@ function showStats()
 				},
 				{
 					type: "button",
-					x: 104,
-					y: 16,
+					x: 105,
+					y: 17,
 					width: 60,
 					height: 13,
 					text: "Refresh",
@@ -53,8 +53,8 @@ function showStats()
 				{
 					name: "stat-display",
 					type: "custom",
-					x: 2,
-					y: 31,
+					x: 3,
+					y: 32,
 					width: 258,
 					height: 203,
 					onDraw: drawStats,
@@ -62,9 +62,9 @@ function showStats()
 				{
 					name: "range-min",
 					type: "spinner",
-					x: 2,
-					y: 235,
-					width: 100,
+					x: 3,
+					y: 236,
+					width: 80,
 					height: 13,
 					onDecrement: decMin,
 					onIncrement: incMin,
@@ -72,9 +72,9 @@ function showStats()
 				{
 					name: "range-max",
 					type: "spinner",
-					x: 160,
-					y: 235,
-					width: 100,
+					x: 181,
+					y: 236,
+					width: 80,
 					height: 13,
 					onDecrement: decMax,
 					onIncrement: incMax,
@@ -167,12 +167,12 @@ function refreshStats()
 function refreshUI()
 {
 	const window = getWindow();
-	window.maxWidth = width + 7;
-	window.minWidth = width + 7;
+	window.maxWidth = width + 8;
+	window.minWidth = width + 8;
 	window.findWidget<CustomWidget>("stat-display").width = width + 2;
 	window.findWidget<SpinnerWidget>("range-min").text = show(rangeMin);
 	window.findWidget<SpinnerWidget>("range-max").text = show(rangeMax);
-	window.findWidget<SpinnerWidget>("range-max").x = width - 96;
+	window.findWidget<SpinnerWidget>("range-max").x = width - 75;
 }
 
 function decMin()
@@ -224,11 +224,14 @@ function makeStats(data: number[])
 
 function drawStats(this: CustomWidget, g: GraphicsContext)
 {
-	g.fill = 21;
 	g.well(0, 0, width + 2, 203);
+
+	g.fill = 15;
+	g.rect(rangeMin * scaleX + 1, 1, (rangeMax - rangeMin + 1) * scaleX, 200);
 
 	for (let x = 0; x < stats.length; x++)
 	{
+		g.fill = x < rangeMin || x > rangeMax ? 19 : 21;
 		const height = Math.ceil(stats[x] * scaleY);
 		g.rect(x * scaleX + 1, 201 - height, scaleX, height);
 	}
